@@ -1,86 +1,53 @@
 # Unit 1 — Issue Selection
 
-Path: `beat-1-sandbox/unit-1/selection.md`
-
-Record of the issue carried into Unit 2, and of the evaluation runs that produced
-`eval-run.txt`. This file is graded at the path above; a copy kept anywhere else in
-the repository is not read.
-
-Complete every labelled field below. Each is graded on its own; content placed under the
-wrong label is not graded.
-
----
-
 ## Selected issue
 
-**Issue link**
+### Issue link
 
-[The individual Path Review issue page. A link to the repository or the issue list
-does not satisfy this field.]
+https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72
 
-**Verdict output**
-
-[Your skill's live-mode output for this issue, pasted verbatim and ending with the
-fenced JSON verdict block. A summary does not satisfy this field.]
-
-**The verdict must record `accept` for this issue.** Choose an issue your own skill
-accepts. If your skill rejects every candidate you try, that is a signal about your
-rubric rather than about the issues: revise it and re-run — retries are unlimited and a
-partial re-run costs about $0.20 — or run the skill on different candidates. Output
-recording `reject` for the issue you chose earns no credit for this field.
+### Verdict output
 
 ```
-paste the output here, including the closing JSON block
-```
+PASTE THE CLEAN, COMPLETE, VERBATIM LIVE-MODE OUTPUT FOR ISSUE #72 HERE,
+INCLUDING THE FINAL FENCED JSON BLOCK. Run:
 
----
+claude "issue-select: grade this candidate first issue: https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72"
+
+and paste the full terminal output below, unedited.
+```
 
 ## Eval iterations
 
-Quote source text directly in each field below. Paraphrase does not satisfy them.
+### Run history
 
-**Run history**
+- Run 1 (smoke test, `--limit 3`): 2/3 agreement (issue-01 disagreed: gold accept, graded reject)
+- Run 2 (full run, 20 issues): 18/20 agreement (bar: PASS) — categories: claimed 4/4, clear-accept 8/8, dead-repo 3/3, policy 1/1, scope 2/4
+- Run 3 (full run, 20 issues, after tightening the "bounded spec" check for the scope category): 18/20 agreement (bar: PASS) — categories: claimed 4/4, clear-accept 6/8, dead-repo 3/3, policy 1/1, scope 4/4
+- Run 4 (`--only issue-01,issue-05,issue-10,issue-15,issue-20`, checking the scope fix did not break earlier passes): 5/5 agreement
+- Run 5 (`--only issue-01,issue-15,issue-19,issue-20`, confirming the single-author-vs-disputed distinction fix): 4/4 agreement
+- Run 6 (final full run, saved to `eval-run.txt`): 19/20 agreement (bar: 18/20: PASS) — categories: claimed 4/4, clear-accept 7/8, dead-repo 3/3, policy 1/1, scope 4/4
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+### Issue analysis
 
-**Issue analysis**
+issue-01 (conda/conda#16475): gold label is `accept`. My rubric's first full run rejected it, failing "Maintainer responsiveness" because the sampled issue-response threads mostly showed no maintainer reply within 30 days ("no maintainer comment in thread" on 3 of 5 sampled issues, one at 32.9 days). That check was weighting the wrong signal for this case: the repo's last 5 default-branch commits were all authored by a human within a day of the capture date, which is a stronger and more direct liveness signal than issue-thread response latency on a fast-moving repo where maintainers triage by merging rather than by replying. I rewrote the check ("Repo shows human activity") to pass on either signal — recent human commits or a maintainer thread reply — rather than requiring the reply signal specifically, and issue-01 then graded `accept`, matching gold. (Note: on the final saved run, issue-01 disagreed again in the opposite direction, this time failing "Issue has a settled, bounded spec" — a sign the check still sits close to the edge for this particular issue, discussed further under Trade-offs.)
 
-[One scored issue, identified by id (`issue-01` through `issue-20`; the `calib-`
-issues are not scored). State your rubric's decision, the gold label, and the
-reasoning that produced your rubric's result.]
+### Check rationale
 
-**Check rationale**
+Quoted check ("Issue has a settled, bounded spec", pass condition, as currently written in `rubric.md`):
 
-[One check from the `rubric.md` uploaded to `tools/issue-select/`, quoted as it is
-currently written, with the reasoning behind its current form.]
+"Passes even when the issue lists multiple named causes or candidate approaches, as long as those come from a single author (e.g. a maintainer's own bug diagnosis) with no unresolved dispute -- offering options is normal scoping, not an unsettled debate."
 
-**Trade-offs**
+Reasoning: an earlier version of this check treated any issue naming multiple possible causes or candidate fixes as "unbounded," which incorrectly rejected issue-19 (a maintainer's own bug diagnosis naming two causes and three candidate fixes, with zero comments and no dispute). The current wording distinguishes a single author scoping out the problem space from an actual unresolved disagreement between multiple people, which is what the "scope" category's gold labels (issue-15's years of multi-person design debate, issue-20's unendorsed product request) are actually testing for.
 
-[What the quoted check gives up. Any one of these is a complete answer: an issue whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
+### Trade-offs
 
----
+This check's current wording accepts issue-19 (single-author, multiple named causes, no dispute) while still correctly rejecting issue-20 (a bot-opened feature request with an unendorsed product decision) and issue-15 (years of multi-person design debate with no maintainer resolution). I re-ran these together with `--only issue-01,issue-15,issue-19,issue-20` after the change and all four matched gold at that point. The trade-off showed up on the final saved run: issue-01 flipped to `reject` on this check even though its content did not change between runs, which means the check is sitting close to a genuine edge case for that specific issue rather than being clearly settled either way. The check can only weigh disagreement that was actually posted in the captured thread, not disagreement that exists but was never voiced, so a quiet but real dispute would slip through as "no unresolved dispute" under the current wording.
 
 ## Selection rationale
 
-Graded on whether all three are answered, in your own words. Not on how good the
-reasoning is, and not on length — a short honest answer to each earns the full marks.
-This is also the basis for the claim comment you write in Unit 2.
+1. #72 fits my background well. It is pure Python, a logic bug in `core/security.py`, and comes with a test already implied by removing the `xfail` marker, which matches my experience building a Python trading system and doing ML-based fraud detection research, and fits comfortably in the time available before the Unit 2 deadline.
 
-**Selection rationale**
+2. The verdict correctly identified that the repo is alive (a human commit five days before capture), that the issue is unclaimed (no PRs exist anywhere in the repo, zero comments), and that it is a bounded, single-author bug report with a stated fix. What the rubric could not weigh is that this is specifically a security-relevant fail-open bug (`verify_password` should fail closed rather than raise), which makes it a more meaningful first contribution to me personally than a similarly-scoped but lower-stakes bug would be.
 
-[Answer all three:
-
-1. The issue's fit to your interests and to the time available.
-2. What the verdict identified correctly, and what you weighed that the rubric could
-   not.
-3. The anticipated difficulty in claiming it.]
-
----
-
-Related paths: `eval-run.txt` in this directory; your skill's files in
-`tools/issue-select/`.
+3. I expect claiming it to be straightforward. There are zero existing comments or PRs on the issue, so there is no competition to navigate, and the fix itself is narrowly scoped to one function with a test the issue already points to.
