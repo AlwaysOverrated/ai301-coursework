@@ -6,16 +6,6 @@
 
 https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72
 
-### Verdict output
-
-```
-PASTE THE CLEAN, COMPLETE, VERBATIM LIVE-MODE OUTPUT FOR ISSUE #72 HERE,
-INCLUDING THE FINAL FENCED JSON BLOCK. Run:
-
-claude "issue-select: grade this candidate first issue: https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72"
-
-and paste the full terminal output below, unedited.
-```
 
 ## Eval iterations
 
