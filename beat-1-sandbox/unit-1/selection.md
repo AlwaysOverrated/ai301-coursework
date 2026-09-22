@@ -9,12 +9,37 @@ https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72
 ### Verdict output
 
 ```
-PASTE THE CLEAN, COMPLETE, VERBATIM LIVE-MODE OUTPUT FOR ISSUE #72 HERE,
-INCLUDING THE FINAL FENCED JSON BLOCK. Run:
+Repo facts (codepath/pathreview-ai301-fa26-s3, checked 2026-09-21): not archived, 2 stars, last push 2026-09-16, last 5 default-branch commits all authored by Aburke225 (human, most recent 5 days ago), no open PRs in the repo, no AI policy in docs/CONTRIBUTING.md, README, or the PR template.
 
-claude "issue-select: grade this candidate first issue: https://github.com/codepath/pathreview-ai301-fa26-s3/issues/72"
-
-and paste the full terminal output below, unedited.
+┌────────────────────────┬───────┬────────────────────────────────────────────────────────────────────────────────┐
+│         Check          │ Grade │                                    Evidence                                    │
+├────────────────────────┼───────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Repo not archived      │ pass  │ "isArchived": false                                                            │
+├────────────────────────┼───────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Repo recently active   │ pass  │ Last push 2026-09-16 — 5 days before today                                     │
+├────────────────────────┼───────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Repo shows human       │ pass  │ 5 of last 5 commits by Aburke225 (human), newest 2026-09-16                    │
+│ activity               │       │                                                                                │
+├────────────────────────┼───────┼────────────────────────────────────────────────────────────────────────────────┤
+│                        │       │ Single-author issue from a COLLABORATOR naming the exact fix ("should fail     │
+│ Settled, bounded spec  │ pass  │ closed (return False), not raise"), two files, 1–2 h estimate, zero comments   │
+│                        │       │ and so no dispute                                                              │
+├────────────────────────┼───────┼────────────────────────────────────────────────────────────────────────────────┤
+│ Not a pure support     │ pass  │ Reports arity.py, not a usage question            │
+│ question               │       │                                                                                │
+├────────────────────────┼───────┼───────────────────────────────────────────────────┤
+│                        │       │ assigneesthe only two timeline events are         │
+│ Unclaimed              │ pass  │ classmates' commits in their own coursework forks, which the Path Review house │
+│                        │       │  rule says never block                                                         │
+├────────────────────────┼───────┼───────────────────────────────────────────────────┤
+│ AI-contribution policy │ pass  │ No AI polTRIBUTING.md covers branches, commits,   │
+│  not a ban             │       │ CI and xfsses                                     │
+├────────────────────────┼───────┼───────────────────────────────────────────────────┤
+│ Good-first-issue label │ pass  │ Labels inbug, api, tier-1 (Starter difficulty)    │
+│  (preferred)           │       │                                                   │
+├────────────────────────┼───────┼───────────────────────────────────────────────────┤
+│ Adoption / usage scale │ fail  │ 2 stars,  classroom repo, so low adoption (does   │
+│  (preferred)           │       │ not affec                                         │└────────────────────────┴───────┴───────────────────────────────────────────────────┘Every required check passes, so the verdict strong match for you: it's pure Pythonbackend work in core/security.py with a pyteytest.mark.xfail marker for manifest idH-05), no frontend or styling, and it's a code fix rather than docs. The one caveat worth flagging: the two classmates who referenced this issue on 2026-09-20 are likely working it too — normal here, and per the house rule you should claim and open your PR anyway, since credit erge.
 ```
 
 ## Eval iterations
